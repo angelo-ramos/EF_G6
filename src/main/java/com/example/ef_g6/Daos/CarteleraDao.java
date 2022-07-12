@@ -51,4 +51,42 @@ public class CarteleraDao extends DaoBase {
     }
 
 
+    public Cartelera mostrarFuncion (String idFuncion) {
+        Cartelera cartelera = new Cartelera();
+        String sql = "SELECT C.idCartelera, D.nombre,D.idcine,E.nombre_comercial ,D.idcadena ,P.nombre, P.idpelicula, C.3d,C.doblada,C.subtitulada,C.horario FROM cartelera C, pelicula P, cine D, cadena E where C.idpelicula = P.idpelicula and C.idcine = D.idcine and D.idcadena = E.idcadena and C.idCartelera = ?";
+        try (Connection connection = this.obtenerConexion();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setString(1,idFuncion);
+
+            try(ResultSet rs = pstmt.executeQuery();){
+                while(rs.next()){
+                    Cine cine = new Cine();
+                    Cadena cadena = new Cadena();
+                    Pelicula pelicula = new Pelicula();
+                    cartelera.setIdCartelera(rs.getInt(1));
+                    cine.setNombre(rs.getString(2));
+                    cine.setIdCine(rs.getInt(3));
+                    cadena.setNombreComercial(rs.getString(4));
+                    cine.setCadena(cadena);
+                    cartelera.setCine(cine);
+                    pelicula.setNombre(rs.getString(6));
+                    pelicula.setIdPelicula(rs.getInt(7));
+                    cartelera.setPelicula(pelicula);
+                    cartelera.setTresD(rs.getInt(8));
+                    cartelera.setDoblada(rs.getInt(9));
+                    cartelera.setSubtitulada(rs.getInt(10));
+                    cartelera.setHorario(rs.getString(11));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return cartelera;
+    }
+
+
 }
