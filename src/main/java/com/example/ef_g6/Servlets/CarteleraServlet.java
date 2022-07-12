@@ -17,7 +17,7 @@ public class CarteleraServlet extends HttpServlet {
         switch(action){
             case "listar" ->{
                 request.setAttribute("cartelera", carteleraDao.listarCartelera("3"));
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Menu.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cartelera.jsp");
                 requestDispatcher.forward(request, response);
             }
         }
