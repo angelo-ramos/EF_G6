@@ -1,5 +1,9 @@
 package com.example.ef_g6.Servlets;
 
+import com.example.ef_g6.Beans.Empleado;
+import com.example.ef_g6.Beans.Rol;
+import com.example.ef_g6.Daos.LoginDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "LoginServlet", value = "")
 public class LoginServlet extends HttpServlet {
@@ -29,6 +34,34 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LoginDao loginDao = new LoginDao();
 
+        Integer dni = Integer.valueOf(request.getParameter("correo"));
+        Integer pass = Integer.valueOf(request.getParameter("pass"));
+        Integer sal = loginDao.getSal(dni);
+
+        if(sal == dni - pass){
+            Empleado usuario = loginDao.getEmpleado(dni);
+            HttpSession session = request.getSession();
+
+            if(usuario !=null){
+                session.setAttribute("usuarioSesion",usuario);
+                ArrayList<Rol> roles = usuario.getRoles();
+                Rol rol = roles.get(1);
+                Integer idRol = rol.getIdRol();
+                session.setAttribute("rol",idRol);
+                session.setMaxInactiveInterval(60*60);
+                if(idRol == 1){
+                    response.sendRedirect(request.getContextPath()+"/AdminServlet");
+                }else if(idRol == 2){
+                    response.sendRedirect(request.getContextPath()+"/GestorServlet");
+                }else{
+                    response.sendRedirect(request.getContextPath()+"/VendedorServlet");
+                }
+            }else{
+                session.setAttribute("indicador","error");
+                response.sendRedirect(request.getContextPath()+"/LoginServlet");
+            }
+        }
     }
 }
