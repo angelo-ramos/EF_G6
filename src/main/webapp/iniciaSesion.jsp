@@ -31,8 +31,8 @@
                     <h3 class="etiUser">Bienvenido</h3>
                 </div>
             </div>
-            <input type="email" name="usuario" placeholder="Usuario" required="">
-            <input type="password" name="contrasena" placeholder="Contraseña" required="">
+            <input type="number" name="dni" placeholder="Usuario" required="">
+            <input type="password" name="pass" placeholder="Contraseña" required="">
 
             <%if(session.getAttribute("msg") != null){%>
             <div>

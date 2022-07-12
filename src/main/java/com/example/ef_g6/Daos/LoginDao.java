@@ -26,7 +26,7 @@ public class LoginDao extends DaoBase{
     public Empleado getEmpleado(Integer dni){
         Empleado user = new Empleado();
         Rol rol = new Rol();
-        String sql = "SELECT e.nombre, e.apellido, r.nombre FROM empleado e, rolempleado re, rol r\n" +
+        String sql = "SELECT e.nombre, e.apellido, r.idrol, r.nombre FROM empleado e, rolempleado re, rol r\n" +
                 "WHERE e.idempleado = re.idempleado\n" +
                 "AND re.idrol = r.idrol\n" +
                 "AND e.dni = ?;";

@@ -36,18 +36,18 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginDao loginDao = new LoginDao();
 
-        Integer dni = Integer.valueOf(request.getParameter("correo"));
+        Integer dni = Integer.valueOf(request.getParameter("dni"));
         Integer pass = Integer.valueOf(request.getParameter("pass"));
         Integer sal = loginDao.getSal(dni);
 
-        if(sal == dni - pass){
+        if(pass == dni - sal){
             Empleado usuario = loginDao.getEmpleado(dni);
             HttpSession session = request.getSession();
 
             if(usuario !=null){
                 session.setAttribute("usuarioSesion",usuario);
                 ArrayList<Rol> roles = usuario.getRoles();
-                Rol rol = roles.get(1);
+                Rol rol = roles.get(0);
                 Integer idRol = rol.getIdRol();
                 session.setAttribute("rol",idRol);
                 session.setMaxInactiveInterval(60*60);
@@ -59,9 +59,12 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/VendedorServlet");
                 }
             }else{
-                session.setAttribute("indicador","error");
-                response.sendRedirect(request.getContextPath()+"/LoginServlet");
+                request.getSession().setAttribute("msg","Error en contraseña o usuario");
+                response.sendRedirect(request.getContextPath());
             }
+        }else{
+            request.getSession().setAttribute("msg","Error en contraseña o usuario");
+            response.sendRedirect(request.getContextPath());
         }
     }
 }

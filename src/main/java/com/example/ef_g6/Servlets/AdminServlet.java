@@ -11,7 +11,8 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        RequestDispatcher view = request.getRequestDispatcher("Cartelera.jsp");
+        view.forward(request, response);
     }
 
     @Override

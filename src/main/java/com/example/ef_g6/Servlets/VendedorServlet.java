@@ -9,7 +9,8 @@ import java.io.IOException;
 public class VendedorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        RequestDispatcher view = request.getRequestDispatcher("CarteleraVe.jsp");
+        view.forward(request, response);
     }
 
     @Override

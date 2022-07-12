@@ -38,7 +38,7 @@
 </nav>
 <section>
 <div class='container lista' style="padding-top:10px; padding-bottom: 10px">
-  <h1 class='mb-3'>Lista de viajes</h1>
+  <h1 class='mb-3'>Lista de Funciones</h1>
 
   <a href="<%=request.getContextPath()%>/PrincipalServlet?a=crear" class="btn btn-primary mb-4">Agregar nueva funcion</a>
 
