@@ -23,7 +23,7 @@
         <!-- Login-->
         <form id="signup" method="POST" action="<%=request.getContextPath()%>/">
             <div class="text-center">
-                <img src="logo.png" width="200"/></a>
+                <img src="logo2.png" width="200"/></a>
             </div>
             <br/>
             <div class="card-header">
