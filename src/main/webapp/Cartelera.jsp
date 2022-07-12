@@ -1,5 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.ef_g6.Beans.Cartelera" %>
+<jsp:useBean id="cartelera" scope="request" type="java.util.ArrayList<com.example.ef_g6.Beans.Cartelera>"/>
 <html>
 <head>
     <title>TeleFunciones</title>
@@ -38,7 +40,7 @@
 </nav>
 <section>
 <div class='container lista' style="padding-top:10px; padding-bottom: 10px">
-  <h1 class='mb-3'>Lista de viajes</h1>
+  <h1 class='mb-3'>Cartelera</h1>
 
   <a href="<%=request.getContextPath()%>/PrincipalServlet?a=crear" class="btn btn-primary mb-4">Agregar nueva funcion</a>
 
@@ -54,16 +56,25 @@
       </tr>
     </thead>
     <tbody>
+    <%for (Cartelera pelicula : cartelera){%>
       <tr>
-        <td>Cineplanet</td>
-        <td>Cine</td>
-        <td>Pelicula</td>
-        <td>Horario</td>
-        <td><a class="btn btn-primary" href="<%=request.getContextPath()%>/PrincipalServlet?a=editar&id=">Editar</a></td>
+        <% String caracteristicas = " - ";
+          if(pelicula.getTresD() == 1){
+            caracteristicas = caracteristicas + "3D ";
+          }if(pelicula.getSubtitulada() ==1 ){
+            caracteristicas = caracteristicas + "Subtitulada ";
+          }if(pelicula.getDoblada() ==1 ){
+            caracteristicas = caracteristicas + "Doblada";
+          }%>
+        <td><%=pelicula.getCine().getCadena().getNombreComercial()%></td>
+        <td><%=pelicula.getCine().getNombre()%></td>
+        <td><%=pelicula.getPelicula().getNombre() + caracteristicas%></td>
+        <td><%=pelicula.getHorario()%></td>
+        <td><a class="btn btn-primary" href="<%=request.getContextPath()%>/EditarServlet?id=<%=pelicula.getIdCartelera()%> ">Editar</a></td>
         <td><button type="button" data-bs-toggle="modal" data-bs-target="#Modal" class="btn btn-danger">Borrar</button></td>
       </tr>
+    <%}%>
     </tbody>
-
   </table>
 </div>
 </section>
